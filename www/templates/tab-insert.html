@@ -1,0 +1,96 @@
+<ion-view view-title="บันทึกข้อมูลขยะ">
+  <ion-content class="padding">
+    <form name="myForm" novalidate>
+      <h4>กรอกปริมาณขยะจากการสำรวจ</h4>
+
+      <div class="list">
+        <label class="item item-input">
+    <span class="input-label">เศษอาหาร</span>
+    <input type="number" ng-model='gb.food' placeholder="0" style="text-align:center" required>    
+    <span class="input-label">กก.</span>
+  </label>
+
+        <label class="item item-input">
+    <span class="input-label">กระดาษ</span>
+    <input type="number" ng-model='gb.paper' placeholder="0" style="text-align:center" required>    
+    <span class="input-label">กก.</span>
+  </label>
+
+        <label class="item item-input">
+    <span class="input-label">พลาสติก</span>
+    <input type="number" ng-model='gb.plastic' placeholder="0" style="text-align:center" required>    
+    <span class="input-label">กก.</span>
+  </label>
+
+        <label class="item item-input">
+    <span class="input-label">หนัง</span>
+    <input type="number" ng-model='gb.leather' placeholder="0" style="text-align:center" required>    
+    <span class="input-label">กก.</span>
+  </label>
+
+        <label class="item item-input">
+    <span class="input-label">ผ้า</span>
+    <input type="number" ng-model='gb.fabric' placeholder="0" style="text-align:center" required>    
+    <span class="input-label">กก.</span>
+  </label>
+
+        <label class="item item-input">
+    <span class="input-label">ไม้</span>
+    <input type="number" ng-model='gb.wood' placeholder="0" style="text-align:center" required>    
+    <span class="input-label">กก.</span>
+  </label>
+
+        <label class="item item-input">
+    <span class="input-label">แก้ว</span>
+    <input type="number" ng-model='gb.glass' placeholder="0" style="text-align:center" required>    
+    <span class="input-label">กก.</span>
+  </label>
+
+        <label class="item item-input">
+    <span class="input-label">โลหะ</span>
+    <input type="number" ng-model='gb.metal' placeholder="0" style="text-align:center" required>    
+    <span class="input-label">กก.</span>
+  </label>
+
+        <label class="item item-input">
+    <span class="input-label">หิน</span>
+    <input type="number" ng-model='gb.rock' placeholder="0" style="text-align:center" required>    
+    <span class="input-label">กก.</span>
+  </label>
+
+        <label class="item item-input">
+    <span class="input-label">กระเบื้อง</span>
+    <input type="number" ng-model='gb.tile' placeholder="0" style="text-align:center" required>    
+    <span class="input-label">กก.</span>
+  </label>
+
+        <label class="item item-input">
+    <span class="input-label">มูลฝอยอื่น ๆ</span>
+    <input type="number" ng-model='gb.other' placeholder="0" style="text-align:center" required>    
+    <span class="input-label">กก.</span>
+  </label>
+
+        <label class="item item-input">
+    <span class="input-label">มูลฝอยอันตราย</span>
+    <input type="number" ng-model='gb.hazard' placeholder="0" style="text-align:center" required>    
+    <span class="input-label">กก.</span>
+  </label>
+
+        <!-- <label class="item item-input">
+    <span class="input-label">จำนวนประชากร</span>
+    <input type="number" ng-model='gb.pop' placeholder="0" required>
+  </label> -->
+
+        <label class="item item-input">
+    <span class="input-label">วันที่สำรวจ</span>
+    <input type="date" ng-model='gb.date' required>
+  </label>
+      </div>
+
+      <p></p>
+
+
+      <button class="button button-block button-calm" ng-disabled="myForm.$invalid" ng-click="gbInsert();">บันทึก</button>
+      </form name="myForm" novalidate>
+  </ion-content>
+</ion-view>

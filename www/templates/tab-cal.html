@@ -1,0 +1,33 @@
+<ion-view view-title="คำนวณปริมาณขยะ">
+    <ion-content class="padding">
+        กรอกผลรวมของปริมาณขยะที่จัดเก็บ เพื่อนำมาคำนวณขยะแต่ละประเภท
+        <div class="card">            
+            <label class="item item-input">
+                <span class="input-label">ปริมาณขยะ</span>
+                <input type="number" style="text-align:center" ng-model='gb.total' ng-change="reset()">
+                <span class="input-label">กิโลกรัม</span>
+            </label>
+        </div>
+
+        <div class="card">
+            <label class="item item-input item-select">
+                <div class = "input-label">สถิติที่ใช้คำนวณ</div>            
+                <select ng-model='b.ctype' ng-options="a.id as a.rname for a in gbrates" ng-change="cal(b.ctype)"></select>
+                <!-- <option value=""> </option> -->
+            </label>
+        </div>
+
+        <div class="card">
+            <div class="padding">
+                ขยะมูลฝอยทั่วไป {{exp.general | number:2}} กิโลกรัม </br>
+                ขยะอินทรีย์ {{exp.organic | number:2}} กิโลกรัม </br>
+                ขยะรีไซเคิล {{exp.recycle | number:2}} กิโลกรัม </br>
+                ขยะอันตราย {{exp.hazard | number:2}} กิโลกรัม </br>
+            </div>
+        </div>
+
+        <div class="chart">
+        <pie-chart config="config" data="data"></pie-chart>
+      </div>
+    </ion-content>
+</ion-view>

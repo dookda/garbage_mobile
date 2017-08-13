@@ -1,0 +1,28 @@
+<ion-view view-title="สถิติขยะ">
+
+  <ion-nav-buttons side="right">
+    <button class="button button-icon ion-loop" ng-click="reload()"></button>
+    <button class="button button-icon icon ion-clipboard" ng-click="gotoInsert()"></button>
+  </ion-nav-buttons>
+
+  <ion-content class="padding">
+    <h4>สถิติข้อมูลขยะมูลฝอย</h4>
+    <div class="card">
+      <div class="col-md-12">
+        <bar-chart config="config" data="data"></bar-chart>
+      </div>
+    </div>
+    <p></p>
+  <h4>ปริมาณขยะที่ผ่านมา</h4>
+    <ion-list>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="gb in allGb" ng-click="gotoEdit(gb)">
+        <img ng-src="img/{{gb.gbmmen}}.png">
+        <h2>ปริมาณขยะ {{gb.total}} กิโลกรัม</h2>
+        <p>วันที่บันทึกข้อมูล {{gb.gbdd}} {{gb.gbmmth}} {{gb.gbyy}}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+        <ion-option-button class="button-assertive" ng-click="remove(gb)">ลบ</ion-option-button>
+      </ion-item>
+    </ion-list>
+
+  </ion-content>
+</ion-view>

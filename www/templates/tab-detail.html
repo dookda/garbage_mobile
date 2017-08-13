@@ -1,0 +1,84 @@
+<ion-view view-title="แก้ไขข้อมูล">
+  <ion-content class="padding">
+
+      <h4>ปริมาณขยะจากการสำรวจ</h4>
+
+
+      <div class="card">
+        <div class="item item-text-wrap">
+          ปริมาณขยะ ({{selGb.gbdd}} {{selGb.gbmmth}} {{selGb.gbyy}})
+          <div class="chart">
+            <pie-chart config="config" data="dataTotal"></pie-chart>
+          </div>
+          ปริมาณขยะจำแนกเป็นรายประเภท
+          <div class="chart">
+            <radar-chart config="configRadar" data="dataRadar"></radar-chart>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+      <label class="item item-input">
+            <span class="input-label">เศษอาหาร</span>
+            <input type="text" disabled="true" style="text-align:center" placeholder="{{selGb.food}}">&nbsp;
+            <span class="input-label">กก.</span>
+          </label>
+      <label class="item item-input">
+            <span class="input-label">กระดาษ</span>
+            <input type="text" disabled="true" style="text-align:center" placeholder="{{selGb.paper}}">&nbsp;
+            <span class="input-label">กก.</span>
+          </label>
+      <label class="item item-input">
+            <span class="input-label">พลาสติก</span>
+            <input type="text" disabled="true" style="text-align:center" placeholder="{{selGb.plastic}}">&nbsp;
+            <span class="input-label">กก.</span>
+          </label>
+      <label class="item item-input">
+            <span class="input-label">หนัง</span>
+            <input type="text" disabled="true" style="text-align:center" placeholder="{{selGb.leather}}">&nbsp;
+            <span class="input-label">กก.</span>
+          </label>
+      <label class="item item-input">
+            <span class="input-label">ผ้า</span>
+            <input type="text" disabled="true" style="text-align:center" placeholder="{{selGb.fabric}}">&nbsp;
+            <span class="input-label">กก.</span>
+          </label>
+      <label class="item item-input">
+            <span class="input-label">ไม้</span>
+            <input type="text" disabled="true" style="text-align:center" placeholder="{{selGb.wood}}">&nbsp;
+            <span class="input-label">กก.</span>
+          </label>
+      <label class="item item-input">
+            <span class="input-label">แก้ว</span>
+            <input type="text" disabled="true" style="text-align:center" placeholder="{{selGb.glass}}">&nbsp;
+            <span class="input-label">กก.</span>
+          </label>
+      <label class="item item-input">
+            <span class="input-label">โลหะ</span>
+            <input type="text" disabled="true" style="text-align:center" placeholder="{{selGb.metal}}">&nbsp;
+            <span class="input-label">กก.</span>
+          </label>
+      <label class="item item-input">
+            <span class="input-label">หิน</span>
+            <input type="text" disabled="true" style="text-align:center" placeholder="{{selGb.rock}}">&nbsp;
+            <span class="input-label">กก.</span>
+          </label>
+      <label class="item item-input">
+            <span class="input-label">กระเบื้อง</span>
+            <input type="text" disabled="true" style="text-align:center" placeholder="{{selGb.tile}}">&nbsp;
+            <span class="input-label">กก.</span>
+          </label>
+      <label class="item item-input">
+            <span class="input-label">มูลฝอยอื่น ๆ</span>
+            <input type="text" disabled="true" style="text-align:center" placeholder="{{selGb.other}}">&nbsp;
+            <span class="input-label">กก.</span>
+           </label>
+      <label class="item item-input">
+            <span class="input-label">มูลฝอยอันตราย</span>
+            <input type="text" disabled="true" style="text-align:center" placeholder="{{selGb.hazard}}">&nbsp;
+            <span class="input-label">กก.</span>
+           </label>
+    </div>
+
+
+  </ion-content>
+</ion-view>
