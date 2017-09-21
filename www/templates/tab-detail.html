@@ -1,21 +1,24 @@
-<ion-view view-title="แก้ไขข้อมูล">
+<ion-view view-title="รายละเอียดข้อมูลที่บันทึก">
   <ion-content class="padding">
 
-      <h4>ปริมาณขยะจากการสำรวจ</h4>
-
+      <h4>สรุปปริมาณขยะ</h4>
 
       <div class="card">
         <div class="item item-text-wrap">
-          ปริมาณขยะ ({{selGb.gbdd}} {{selGb.gbmmth}} {{selGb.gbyy}})
+          ปริมาณขยะวันที่ ({{selGb.gbdd}} {{selGb.gbmmth}} {{selGb.gbyy}})
+          <br></br>
+          จำแนกเป็น 4 ประเภท ได้แก่
+
           <div class="chart">
             <pie-chart config="config" data="dataTotal"></pie-chart>
-          </div>
-          ปริมาณขยะจำแนกเป็นรายประเภท
+          </div>        
+          จำแนกเป็นรายประเภท
           <div class="chart">
             <radar-chart config="configRadar" data="dataRadar"></radar-chart>
           </div>
         </div>
       </div>
+      <h4>รายละเอียดขยะมูลฝอยแต่ละประเภท</h4>
       <div class="card">
       <label class="item item-input">
             <span class="input-label">เศษอาหาร</span>

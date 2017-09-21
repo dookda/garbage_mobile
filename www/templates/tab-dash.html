@@ -13,12 +13,11 @@
       </div>
     </div>
     <p></p>
-  <h4>ปริมาณขยะที่ผ่านมา</h4>
+  <h4>ข้อมูลองค์ประกอบของขยะมูลฝอย</h4>
     <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="gb in allGb" ng-click="gotoEdit(gb)">
-        <img ng-src="img/{{gb.gbmmen}}.png">
-        <h2>ปริมาณขยะ {{gb.total}} กิโลกรัม</h2>
-        <p>วันที่บันทึกข้อมูล {{gb.gbdd}} {{gb.gbmmth}} {{gb.gbyy}}</p>
+      <ion-item class="item-remove-animate item-icon-right" ng-repeat="gb in allGb" ng-click="gotoEdit(gb)">
+        <h2>สถิติขยะมูลฝอย วันที่ {{gb.gbdd}} {{gb.gbmmth}} {{gb.gbyy}}</h2>
+        <p>อินทรีย์:{{gb.organic*100 | number:0}}% ทั่วไป:{{gb.general*100 | number:0}}% รีไซเคิล:{{gb.recycle*100 | number:0}}% อันตราย:{{gb.hazard*100 | number:0}}% </p>
         <i class="icon ion-chevron-right icon-accessory"></i>
         <ion-option-button class="button-assertive" ng-click="remove(gb)">ลบ</ion-option-button>
       </ion-item>

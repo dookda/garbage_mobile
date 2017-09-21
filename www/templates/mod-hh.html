@@ -1,0 +1,114 @@
+<ion-modal-view>
+  <ion-header-bar class="bar bar-header">
+    <h1 class="title">เก็บข้อมูล</h1>
+    <!-- <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button> -->
+  </ion-header-bar>
+  <ion-content class="padding">
+
+
+    <div class="padding">
+            <form name="myForm">
+      <label class="item item-avatar item-input item-stacked-label item-select">
+                    <img ng-src="img/number_icon_1.png">
+                    <span class="input-label">เลือกประเภทของข้อมูลที่ต้องการจัดเก็บ</span>
+                    <select ng-model='datType' ng-options="a.type for a in dataTypes"></select>      
+        </label>
+
+      <p></p>
+      
+      <div ng-show="datType.type=='ข้อมูลครัวเรือน'">
+          <label class="item item-avatar item-input item-stacked-label item-select">
+                <img ng-src="img/number_icon_2.png">
+                <span class="input-label">คำนำหน้าชื่อ</span>
+                <select name="housePName" ng-model='h.pname' ng-options="b.type for b in preNames" required></select>      
+            </label>
+            <p></p>
+          <label class="item item-avatar item-input item-stacked-label">
+                <img ng-src="img/number_icon_3.png">
+                <span class="input-label">ชื่อ</span>
+                <input type="text" name="houseFName" ng-model='h.fname' required>
+            </label>
+            <p></p>
+          <label class="item item-avatar item-input item-stacked-label">
+                <img ng-src="img/number_icon_4.png">
+                <span class="input-label">นามสกุล</span>
+                <input type="text" name="houseSName" ng-model='h.sname' required>
+            </label>
+            <p></p>
+          <label class="item item-avatar item-input item-stacked-label">
+                <img ng-src="img/number_icon_5.png">
+                <span class="input-label">รายละเอียดอื่นๆ</span>
+                <input type="text" name="houseDesc" ng-model='h.desc'>
+            </label>
+            <p></p>
+            <label class="item item-avatar item-input item-stacked-label">
+                  <img ng-src="img/number_icon_6.png">
+                  <span class="input-label">พิกัด</span>
+                  <input type="text" name="locate" value="{{locate.lat | number:1}} {{locate.lng | number:1}}">
+              </label>
+          <p></p>
+          <div class="button-bar">
+            <a class="button button-positive" ng-disabled="myForm.housePName.$invalid || myForm.houseFName.$invalid || myForm.houseSName.$invalid" ng-click="insertMarker(datType,h)">บันทึก</a>
+            <a class="button button-dark" ng-click="modal.hide()">ยกเลิก</a>
+          </div>
+      </div>
+
+
+      <div ng-show="datType.type=='แหล่งรับซื้อขยะรีไซเคิล'">
+        <label class="item item-avatar item-input item-stacked-label">
+                <img ng-src="img/number_icon_2.png">
+                <span class="input-label">ชื่อสถานที่รับซื้อ</span>
+                <input type="text" name="marketName" ng-model='m.name' required>      
+            </label>
+            <p></p>
+        <label class="item item-avatar item-input item-stacked-label">
+                <img ng-src="img/number_icon_3.png">
+                <span class="input-label">รายละเอียดสถานที่รับซื้อ</span>
+                <input type="text" name="marketDesc" ng-model='m.desc'>
+            </label>
+            <p></p>
+            <label class="item item-avatar item-input item-stacked-label">
+                  <img ng-src="img/number_icon_4.png">
+                  <span class="input-label">พิกัด</span>
+                  <input type="text" name="locate" value="{{locate.lat | number:1}} {{locate.lng | number:1}}">
+              </label>
+        <p></p>
+        <div class="button-bar">
+          <a class="button button-positive" ng-disabled="myForm.marketName.$invalid" ng-click="insertMarker(datType,m)">บันทึก</a>
+          <a class="button button-dark" ng-click="modal.hide()">ยกเลิก</a>
+        </div>
+      </div>
+
+
+      <div ng-show="datType.type=='บ่อฝังกลบขยะ'">
+        <label class="item item-avatar item-input item-stacked-label">
+                <img ng-src="img/number_icon_2.png">
+                <span class="input-label">ชื่อบ่อฝังกลบขยะ</span>
+                <input type="text" name="landfillName" ng-model='l.name' required>      
+            </label>
+            <p></p>
+        <label class="item item-avatar item-input item-stacked-label">
+                <img ng-src="img/number_icon_3.png">
+                <span class="input-label">รายละเอียดของบ่อฝังกลบขยะ</span>
+                <input type="text" name="landfillDesc" ng-model='l.desc'>
+            </label>
+            <p></p>
+            <label class="item item-avatar item-input item-stacked-label">
+                  <img ng-src="img/number_icon_4.png">
+                  <span class="input-label">พิกัด</span>
+                  <input type="text" name="locate" value="{{locate.lat | number:1}} {{locate.lng | number:1}}">
+              </label>
+        <p></p>
+        <div class="button-bar">
+          <a class="button button-positive" ng-disabled="myForm.landfillName.$invalid" ng-click="insertMarker(datType,l)">บันทึก</a>
+          <a class="button button-dark" ng-click="modal.hide()">ยกเลิก</a>
+        </div>
+      </div>
+
+    </form>
+
+
+
+    </div>
+  </ion-content>
+</ion-modal-view>

@@ -1,17 +1,44 @@
 {
-  "name": "sidemenu",
-  "version": "0.0.1",
-  "description": "An Ionic project",
-  "devDependencies": {
-    "@ionic/cli-plugin-gulp": "1.1.1",
-    "@ionic/cli-plugin-ionic1": "2.1.1",
-    "gulp": "^3.5.6",
-    "gulp-clean-css": "^3.7.0",
-    "gulp-rename": "^1.2.0",
-    "gulp-sass": "^3.1.0",
-    "ionic": "3.7.0"
-  },
-  "dependencies": {
-    "angular-route": "^1.6.5"
-  }
+    "name": "sidemenu",
+    "version": "0.0.1",
+    "description": "An Ionic project",
+    "devDependencies": {
+        "@ionic/cli-plugin-cordova": "1.6.2",
+        "@ionic/cli-plugin-gulp": "1.1.1",
+        "@ionic/cli-plugin-ionic1": "2.1.1",
+        "gulp": "^3.5.6",
+        "gulp-clean-css": "^3.7.0",
+        "gulp-rename": "^1.2.0",
+        "gulp-sass": "^3.1.0",
+        "ionic": "3.10.3"
+    },
+    "dependencies": {
+        "angular-route": "^1.6.5",
+        "cordova-android": "^6.2.3",
+        "cordova-plugin-compat": "^1.0.0",
+        "cordova-plugin-console": "^1.0.5",
+        "cordova-plugin-device": "^1.1.4",
+        "cordova-plugin-geolocation": "^2.4.3",
+        "cordova-plugin-splashscreen": "^4.0.3",
+        "cordova-plugin-statusbar": "^2.2.1",
+        "cordova-plugin-whitelist": "^1.3.1",
+        "cordova-sqlite-storage": "^2.0.4",
+        "ionic-plugin-keyboard": "^2.2.1",
+        "tslint": "^5.7.0"
+    },
+    "cordova": {
+        "plugins": {
+            "cordova-sqlite-storage": {},
+            "cordova-plugin-console": {},
+            "cordova-plugin-device": {},
+            "cordova-plugin-splashscreen": {},
+            "cordova-plugin-statusbar": {},
+            "cordova-plugin-whitelist": {},
+            "ionic-plugin-keyboard": {},
+            "cordova-plugin-geolocation": {}
+        },
+        "platforms": [
+            "android"
+        ]
+    }
 }

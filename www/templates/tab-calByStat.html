@@ -1,0 +1,53 @@
+<ion-view view-title="คำนวณองค์ประกอบขยะ">
+  <ion-nav-buttons side="right">
+    <button class="button button-icon ion-loop" ng-click="reload()"></button>
+  </ion-nav-buttons>
+
+  <ion-content class="padding">
+      กรอกปริมาณขยะที่ท่านทราบเพื่อคำนวณหาองค์ประกอบขยะแต่ละประเภท
+
+    <div class="card">
+      <label class="item item-avatar item-input item-stacked-label">
+          <img ng-src="img/number_icon_1.png">
+          <span class="input-label">กรอกปริมาณขยะ</span>
+          <input type="number" placeholder="00" ng-model='gb.total' ng-change="cal(b.ctype)">
+        </label>
+      <label class="item item-avatar item-input item-stacked-label item-select">
+          <img ng-src="img/number_icon_2.png">
+          <span class="input-label">เลือกวิธีที่ใช้คำนวณองค์ประกอบของขยะ</span>
+          <select ng-model='b.ctype' ng-options="a.rname for a in gbRates" ng-change="cal(b.ctype)"></select>      
+      </label>
+    </div>
+
+
+    <!-- <div class="card">
+      <label class="item item-avatar item-input">
+        <img ng-src="img/number_icon_1.png">
+        <span class="input-label">กรอกปริมาณขยะ</span>
+        <input type="number" style="text-align:center" ng-model='gb.total' ng-change="cal(b.ctype)">
+        <span class="input-label">กิโลกรัม</span>
+      </label>
+    </div>
+
+    <div class="card">
+      <label class="item item-avatar item-input item-select">
+        <img ng-src="img/number_icon_2.png">
+        <div class = "input-label">คำนวณองค์ประกอบของขยะจาก</div>            
+        <select ng-model='b.ctype' ng-options="a.rname for a in gbRates" ng-change="cal(b.ctype)"></select>
+      </label>
+    </div> -->
+
+    <div class="card">
+      <div class="padding">
+        ขยะมูลฝอยทั่วไป {{exp.general | number:1}} กิโลกรัม </br>
+        ขยะอินทรีย์ {{exp.organic | number:1}} กิโลกรัม </br>
+        ขยะรีไซเคิล {{exp.recycle | number:1}} กิโลกรัม </br>
+        ขยะอันตราย {{exp.hazard | number:1}} กิโลกรัม </br>
+      </div>
+    </div>
+
+    <div class="chart">
+      <pie-chart config="config" data="data"></pie-chart>
+    </div>
+  </ion-content>
+</ion-view>
