@@ -24,8 +24,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     //$cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS people (id integer primary key, firstname text, lastname text)");
     var gb_raw = "CREATE TABLE IF NOT EXISTS gb_raw (" +
       "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+      "gbtoken TEXT," +
       "optname TEXT," +
-      "rname TEXT," +
+      "rname BOOLEAN," +
       "pop REAL," +
       "food REAL," +
       "paper REAL," +
@@ -55,6 +56,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     //create gaabage rate
     var gb_rate = "CREATE TABLE IF NOT EXISTS gb_rate(" +
       "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+      "gbtoken TEXT," +
       "rname character varying(60)," +
       "organic numeric," +
       "general numeric," +
@@ -81,14 +83,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
     //create marker
     var gb_marker = "CREATE TABLE IF NOT EXISTS gb_marker(" +
-    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-    "data_type character varying(50)," +
-    "name character varying(100)," +
-    "desc character varying(255)," +
-    "lat numeric," +
-    "lng numeric" +
-    ")";
-  $cordovaSQLite.execute(db, gb_marker);
+      "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+      "data_type character varying(50)," +
+      "name character varying(100)," +
+      "desc character varying(255)," +
+      "lat numeric," +
+      "lng numeric" +
+      ")";
+    $cordovaSQLite.execute(db, gb_marker);
 
     //delete
     //$cordovaSQLite.execute(db, "DELETE FROM gb_rate WHERE ID = 7");

@@ -3,23 +3,20 @@ angular.module('starter.controllers', ['angular-echarts', 'ngCordova', 'ui-leafl
   .controller('dashCtrl', function ($scope, $cordovaSQLite, $state, $window,
     $timeout, $http, $ionicLoading, gbService) {
 
-    $scope.showLoading = function () {
+    $scope.showLoading = () => {
       $ionicLoading.show({
         template: '<ion-spinner></ion-spinner> <br/> กำลังโหลดข้อมูล...'
-      }).then(function () {});
+      }).then(() => {});
     };
 
-    $scope.hideLoading = function () {
-      $ionicLoading.hide().then(function () {});
+    $scope.hideLoading = () => {
+      $ionicLoading.hide().then(() => {});
     };
 
-
-
-
-    // $scope.getRawChart = function () {
+    // $scope.getRawChart = ()=>{
     //   $scope.showLoading();
     //   gbService.getRawChart()
-    //     .then(function (res) {
+    //     .then((res)=> {
     //       //$scope.gbraw = res.data;
     //       $scope.data = [{
     //         name: 'ปริมาณขยะ',
@@ -30,10 +27,10 @@ angular.module('starter.controllers', ['angular-echarts', 'ngCordova', 'ui-leafl
     // };
     // $scope.getRawChart();
 
-    // $scope.getRaw = function () {
+    // $scope.getRaw = ()=>{
     //   $scope.showLoading();
     //   gbService.getRaw()
-    //     .then(function (res) {
+    //     .then((res)=> {
     //       $scope.allGb = res.data;
     //       $scope.hideLoading();
     //     });
@@ -43,18 +40,18 @@ angular.module('starter.controllers', ['angular-echarts', 'ngCordova', 'ui-leafl
     // $scope.remove = function (gb) {
     //   var link = 'http://localhost/garbage/gb_raw_remove.php';
     //   $http.post(link, gb)
-    //     .then(function (res) {
+    //     .then((res)=> {
     //       $scope.response = res;
     //       $scope.getRawChart();
     //       $scope.getRaw();
     //     });
     // }
 
-    $scope.getRawChart = function () {
+    $scope.getRawChart = () => {
       //$scope.showLoading();
       var sql = "select (gbmmth || gbyy) AS x, total as y  from gb_raw order by gbdate asc";
       $cordovaSQLite.execute(db, sql)
-        .then(function (res) {
+        .then((res) => {
           $scope.data = [{
             name: 'ปริมาณขยะ',
             stack: 'da',
@@ -63,36 +60,66 @@ angular.module('starter.controllers', ['angular-echarts', 'ngCordova', 'ui-leafl
 
           $scope.hideLoading();
           //console.log($scope.data);
-        }, function (err) {
+        }, (err) => {
           console.error(err);
         });
     };
     $scope.getRawChart();
 
-    $scope.getRaw = function () {
+    $scope.getRaw = () => {
       //$scope.showLoading();
       var sql = "select * from gb_raw order by gbdate asc";
       $cordovaSQLite.execute(db, sql)
-        .then(function (res) {
+        .then((res) => {
           $scope.allGb = JSON.parse(JSON.stringify(res.rows));
           $scope.hideLoading();
-        }, function (err) {
+        }, (err) => {
           console.error(err);
         });
     };
     $scope.getRaw();
 
     $scope.remove = function (gb) {
-      //$scope.showLoading();
-      var sql = "delete from gb_raw where optname='" + gb.optname + "' and gbdate='" + gb.gbdate + "'";
+      //drop some value from gb_raw
+      var sql = "delete from gb_raw where gbtoken='" + gb.gbtoken + "';";
       $cordovaSQLite.execute(db, sql)
-        .then(function (res) {
+        .then((res) => {
           $scope.getRawChart();
           $scope.getRaw();
-        }, function (err) {
+        }, (err) => {
+          console.error(err);
+        });
+
+      //drop some value from gb_rate
+      var sql = "delete from gb_rate where gbtoken='" + gb.gbtoken + "';";
+      $cordovaSQLite.execute(db, sql)
+        .then((res) => {
+          console.log('ok');
+        }, (err) => {
           console.error(err);
         });
     };
+
+    $scope.backupChk = function (optname, gbdate) {
+      var sql = "update gb_raw set rname = false where optname='" + optname + "' and gbdate='" + gbdate + "'";
+      $cordovaSQLite.execute(db, sql)
+        .then((res) => {
+          // $scope.getRawChart();
+          // $scope.getRaw();
+        }, (err) => {
+          console.error(err);
+        });
+    };
+
+    $scope.backup = (gb) => {
+      var lnk = 'http://202.29.52.232/service/gb_insert_data.php';
+      $http.post(lnk, gb)
+        .then(function (res) {
+          const otp = res.config.data.optname;
+          const gbd = res.config.data.gbdate;
+          $scope.backupChk(otp, gbd);
+        });
+    }
 
     $scope.config = {
       //title: 'ปริมาณขยะที่ผ่านมา',
@@ -104,15 +131,15 @@ angular.module('starter.controllers', ['angular-echarts', 'ngCordova', 'ui-leafl
       stack: false,
     };
 
-    $scope.reload = function () {
+    $scope.reload = () => {
       $window.location.reload();
     };
 
-    $scope.gotoInsert = function () {
+    $scope.gotoInsert = () => {
       $state.go('tab.insert');
     };
 
-    $scope.gotoEdit = function (gb) {
+    $scope.gotoEdit = (gb) => {
       gbService.getSelected = gb;
       $state.go('tab.detail');
     };
@@ -133,7 +160,7 @@ angular.module('starter.controllers', ['angular-echarts', 'ngCordova', 'ui-leafl
       tile: null,
       other: null,
       hazard: null,
-      //pop: null
+      // pop: null
     }
 
     $scope.init = {
@@ -150,12 +177,14 @@ angular.module('starter.controllers', ['angular-echarts', 'ngCordova', 'ui-leafl
       tile: null,
       other: null,
       hazard: null,
-      //pop: null
+      // pop: null
     }
 
-    $scope.gbInsert = function () {
+    $scope.gbInsert = () => {
       //insert to sqlite
       var optname = $scope.gb.optname;
+      var rname = true;
+      var pop = 0;
       var food = $scope.gb.food;
       var paper = $scope.gb.paper;
       var plastic = $scope.gb.plastic;
@@ -189,6 +218,7 @@ angular.module('starter.controllers', ['angular-echarts', 'ngCordova', 'ui-leafl
       var rate_recycle = calRate(recycle, total);
       var rate_hazard = calRate(hazard, total);
       var rate_rname = 'สถิติวันที่ ' + gbdd + ' ' + gbmmth + ' ' + gbyy;
+      var gbtoken = gbmmen + gbdd + gbyy + Math.random().toString(36).substr(2);
 
       function calRate(a, b) {
         var gbRate = a / b;
@@ -197,28 +227,28 @@ angular.module('starter.controllers', ['angular-echarts', 'ngCordova', 'ui-leafl
 
       //console.log(' organic='+rate_organic+' general='+rate_general+' recycle='+rate_recycle+' hazard='+rate_hazard);
 
-      var sql_rawgb = "INSERT INTO gb_raw (optname,food,paper,plastic,leather,fabric,wood,glass,metal,rock,tile,other,organic,general,recycle,hazard,total,gbdate,gbdd,gbmmth,gbmmen,gbyy,mimg) VALUES ('" + optname + "'," + food + "," + paper + "," + plastic + "," + leather + "," + fabric + "," + wood + "," + glass + "," + metal + "," + rock + "," + tile + "," + other + "," + rate_organic + "," + rate_general + "," + rate_recycle + "," + rate_hazard + "," + total + ",'" + gbdate + "'," + gbdd + ",'" + gbmmth + "','" + gbmmen + "'," + gbyy + ",'" + mimg + "')";
+      var sql_rawgb = "INSERT INTO gb_raw (gbtoken, optname,rname,pop,food,paper,plastic,leather,fabric,wood,glass,metal,rock,tile,other,organic,general,recycle,hazard,total,gbdate,gbdd,gbmmth,gbmmen,gbyy,mimg) VALUES ('" + gbtoken + "','" + optname + "','" + rname + "'," + pop + "," + food + "," + paper + "," + plastic + "," + leather + "," + fabric + "," + wood + "," + glass + "," + metal + "," + rock + "," + tile + "," + other + "," + rate_organic + "," + rate_general + "," + rate_recycle + "," + rate_hazard + "," + total + ",'" + gbdate + "'," + gbdd + ",'" + gbmmth + "','" + gbmmen + "'," + gbyy + ",'" + mimg + "')";
       console.log(sql_rawgb);
-      $cordovaSQLite.execute(db, sql_rawgb).then(function (res) {
-        $timeout(function () {
+      $cordovaSQLite.execute(db, sql_rawgb).then((res) => {
+        $timeout(() => {
           $scope.gb = angular.copy($scope.init);
           $scope.gotoDash();
         }, 200);
-      }, function (err) {
+      }, (err) => {
         console.error(err);
       });
 
-      var sql_rategb = "INSERT INTO gb_rate (rname,organic,general,recycle,hazard) VALUES ('" + rate_rname + "'," + rate_organic + "," + rate_general + "," + rate_recycle + "," + rate_hazard + ")";
-      $cordovaSQLite.execute(db, sql_rategb).then(function (res) {
+      var sql_rategb = "INSERT INTO gb_rate (gbtoken,rname,organic,general,recycle,hazard) VALUES ('" + gbtoken + "','" + rate_rname + "'," + rate_organic + "," + rate_general + "," + rate_recycle + "," + rate_hazard + ")";
+      $cordovaSQLite.execute(db, sql_rategb).then((res) => {
         console.log('insert ok');
-      }, function (err) {
+      }, (err) => {
         console.error(err);
       });
 
     };
 
-    $scope.gotoDash = function () {
-      $timeout(function () {
+    $scope.gotoDash = () => {
+      $timeout(() => {
         $state.go('tab.dash', null, {
           reload: true
         });
@@ -412,17 +442,17 @@ angular.module('starter.controllers', ['angular-echarts', 'ngCordova', 'ui-leafl
 
   .controller('calByStatCtrl', function ($scope, $http, $timeout, $cordovaSQLite, $window) {
 
-    $scope.reload = function () {
+    $scope.reload = () => {
       $window.location.reload();
     };
 
     var gbrateSql = "select * from gb_rate";
     $cordovaSQLite.execute(db, gbrateSql)
-      .then(function (res) {
+      .then((res) => {
         //dat.push(JSON.parse(JSON.stringify(res.rows)));
         $scope.gbRates = JSON.parse(JSON.stringify(res.rows));
         //console.log($scope.gbRates[0]);
-      }, function (err) {
+      }, (err) => {
         console.error(err);
       });
 
@@ -436,7 +466,7 @@ angular.module('starter.controllers', ['angular-echarts', 'ngCordova', 'ui-leafl
       ctype: ''
     };
 
-    $scope.reset = function () {
+    $scope.reset = () => {
       $scope.exp = {
         organic: 0,
         general: 0,
@@ -451,7 +481,6 @@ angular.module('starter.controllers', ['angular-echarts', 'ngCordova', 'ui-leafl
 
     $scope.cal = function (ctype) {
       //console.log(ctype.rname);
-
       $scope.exp = {
         organic: $scope.gb.total * Number(ctype.organic),
         general: $scope.gb.total * Number(ctype.general),
@@ -461,7 +490,6 @@ angular.module('starter.controllers', ['angular-echarts', 'ngCordova', 'ui-leafl
       }
 
       //console.log($scope.exp);
-
       $scope.data = [{
         name: 'ประเภทขยะ',
         datapoints: [{
@@ -522,7 +550,7 @@ angular.module('starter.controllers', ['angular-echarts', 'ngCordova', 'ui-leafl
 
   .controller('calByPopCtrl', function ($scope, $http, $timeout, $cordovaSQLite, $window) {
 
-    $scope.reload = function () {
+    $scope.reload = () => {
       $window.location.reload();
     };
 
@@ -563,14 +591,14 @@ angular.module('starter.controllers', ['angular-echarts', 'ngCordova', 'ui-leafl
 
   .controller('mapCtrl', function ($scope, $stateParams, $ionicLoading, $cordovaGeolocation, $ionicModal, $timeout, $cordovaSQLite, leafletData, datService) {
 
-    $scope.showLoading = function () {
+    $scope.showLoading = () => {
       $ionicLoading.show({
         template: '<ion-spinner></ion-spinner> <br/> กำลังโหลดข้อมูล...'
-      }).then(function () {});
+      }).then(() => {});
     };
 
-    $scope.hideLoading = function () {
-      $ionicLoading.hide().then(function () {});
+    $scope.hideLoading = () => {
+      $ionicLoading.hide().then(() => {});
     };
 
     $scope.center = datService.selectedLocation;
@@ -678,10 +706,10 @@ angular.module('starter.controllers', ['angular-echarts', 'ngCordova', 'ui-leafl
 
     // Get the countries geojson data
     $scope.markers = [];
-    $scope.getJson = function () {
+    $scope.getJson = () => {
       var sql = "select * from gb_marker";
       $cordovaSQLite.execute(db, sql)
-        .then(function (res) {
+        .then((res) => {
           var dat = JSON.parse(JSON.stringify(res.rows));
           console.log(dat);
           var jsonFeatures = [];
@@ -717,7 +745,7 @@ angular.module('starter.controllers', ['angular-echarts', 'ngCordova', 'ui-leafl
             //map.fitBounds(markers.getBounds());
           });
           //console.log(geoJson.type.features);
-        }, function (err) {
+        }, (err) => {
           console.error(err);
         });
     };
@@ -731,7 +759,7 @@ angular.module('starter.controllers', ['angular-echarts', 'ngCordova', 'ui-leafl
       angular.forEach($scope.layers.overlays, function (overlay) {
         if (overlay.visible) overlay.doRefresh = true;
       });
-    });      
+    });
 
     $scope.$on("leafletDirectiveMarker.dragend", function (event, args) {
       $scope.locate = {
@@ -748,7 +776,7 @@ angular.module('starter.controllers', ['angular-echarts', 'ngCordova', 'ui-leafl
       enableHighAccuracy: true
     };
 
-    $scope.getLoc = function () {
+    $scope.getLoc = () => {
       $scope.showLoading();
       $cordovaGeolocation
         .getCurrentPosition(posOptions)
@@ -776,7 +804,7 @@ angular.module('starter.controllers', ['angular-echarts', 'ngCordova', 'ui-leafl
           datService.datSelected = $scope.locate;
           $scope.chkLoc = false;
           $scope.hideLoading();
-        }, function (err) {
+        }, (err) => {
           console.log(err)
         });
     }
@@ -788,13 +816,13 @@ angular.module('starter.controllers', ['angular-echarts', 'ngCordova', 'ui-leafl
     }).then(function (modal) {
       $scope.modal = modal;
     });
-    $scope.openModal = function () {
+    $scope.openModal = () => {
       $scope.modal.show();
     };
-    $scope.closeModal = function () {
+    $scope.closeModal = () => {
       $scope.modal.hide();
     };
-    $scope.$on('$destroy', function () {
+    $scope.$on('$destroy', () => {
       $scope.modal.remove();
     });
 
@@ -827,7 +855,7 @@ angular.module('starter.controllers', ['angular-echarts', 'ngCordova', 'ui-leafl
       }
     ];
 
-    $scope.reset = function () {
+    $scope.reset = () => {
       $scope.dataType = null;
 
       $scope.h = {
@@ -883,12 +911,12 @@ angular.module('starter.controllers', ['angular-echarts', 'ngCordova', 'ui-leafl
 
       var sql_marker = "INSERT INTO gb_marker (data_type,name,desc,lat,lng) VALUES ('" + $scope.dat.datType + "','" + $scope.dat.name + "','" + $scope.dat.desc + "'," + $scope.dat.lat + "," + $scope.dat.lng + ")";
       console.log(sql_marker);
-      $cordovaSQLite.execute(db, sql_marker).then(function (res) {
-        $timeout(function () {
+      $cordovaSQLite.execute(db, sql_marker).then((res) => {
+        $timeout(() => {
           $scope.reset();
           $scope.modal.hide();
         }, 400);
-      }, function (err) {
+      }, (err) => {
         console.error(err);
       });
     }
